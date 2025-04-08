@@ -50,7 +50,7 @@ class HostileEnemy(BaseAI):
         target = self.engine.player
         dx = target.x - self.entity.x
         dy = target.y - self.entity.y
-        distance = max(abs(dx), abd(dy))
+        distance = max(abs(dx), abs(dy))
         
         if self.engine.game_map.visible[self.entity.x, self.entity.y]:
             if distance <= 1:

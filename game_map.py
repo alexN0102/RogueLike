@@ -36,3 +36,8 @@ class GameMap:
             choicelist=[self.tiles["light"], self.tiles["dark"]],
             default=tile_types.SHROUD
         )
+        
+        for entity in self.entities:
+            #Only print entities that are in the FOV
+            if self.visible[entity.x, entity.y]:
+                console.print(x=entity.x, y=entity.y, string=entity.char, fg=entity.color)

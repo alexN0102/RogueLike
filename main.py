@@ -15,7 +15,7 @@ def main() -> None:
         title="Yet Another Roguelike Tutorial",
         vsync=True,
     ) as context:
-        root_console = tcod.console(screen_width, screen_height, order="F")
+        root_console = tcod.Console(screen_width, screen_height, order="F")
         while True:
             root_console.print(x=1, y=1, string="@")
             

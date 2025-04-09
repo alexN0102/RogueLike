@@ -33,7 +33,7 @@ troll = Actor(
 
 confusion_scroll = Item(
     char="~",
-    color=(270, 63, 255),
+    color=(220, 63, 255),
     name="Confusion Scroll",
     consumable=consumable.ConfusionConsumable(number_of_turns=10),
 )

@@ -25,7 +25,7 @@ class Consumable(BaseComponent):
         raise NotImplementedError()
     
 class HealingConsumable(Consumable):
-    def __init__(self, amount: int)
+    def __init__(self, amount: int):
         self.amount = amount
         
     def activate(self, action: actions.ItemAction) -> None:

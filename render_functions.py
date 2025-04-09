@@ -4,7 +4,7 @@ from typing import TYPE_CHECKING
 
 import color
 if TYPE_CHECKING:
-    from tcod import console
+    from tcod import Console
     
 def render_bar(
     console: Console, current_value: int, maximum_value: int, total_width: int

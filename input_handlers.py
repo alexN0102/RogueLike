@@ -116,6 +116,8 @@ class EventHandler(BaseEventHandler):
             # A valid action was performed
             if not self.engine.player.is_alive:
                 return GameOverEventHandler(self.engine)
+            elif self.engine.player.level.requires_level_up:
+                return LevelUpEventHandler(self.engine)
             return MainGameEventHandler(self.engine)
         return self
         

@@ -213,7 +213,7 @@ class LevelUpEventHandler(AskUserEventHandler):
     def ev_keydown(self, event: tcod.event.KeyDown) -> Optional[ActionOrHandler]:
         player = self.engine.player
         key = event.sym
-        index = key - tcod.event.get_keyboard_state
+        index = key - tcod.event.K_a 
         
         if 0 <= index <= 2:
             if index == 0:

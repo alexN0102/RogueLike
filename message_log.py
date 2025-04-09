@@ -42,7 +42,7 @@ class MessageLog:
         `x`, `y`, `width`, `height` is the rectangular region to render onto 
         the `console`
         """
-        self.render_messages(console, x, y, width, height, self.messsages)
+        self.render_messages(console, x, y, width, height, self.messages)
         
     @staticmethod
     def render_messages(

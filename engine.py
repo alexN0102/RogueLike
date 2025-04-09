@@ -29,7 +29,7 @@ class Engine:
             if entity.ai:
                 try:
                     entity.ai.perform()
-                except exceptions.Impossible():
+                except exceptions.Impossible:
                     pass
             
     def update_fov(self) -> None:

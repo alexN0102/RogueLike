@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Callable, Optional, Tuple, TYPE_CHECKING
+from typing import Callable, Optional, Tuple, TYPE_CHECKING, Union
 
 import tcod.event
 
@@ -59,12 +59,40 @@ CONFIRM_KEYS = {
     tcod.event.K_KP_ENTER,
 }
 
-class EventHandler(tcod.event.EventDispatch[Action]):
+ActionOrHandler = Union[Action, "BaseEventHandler"]
+"""An event handler return value which can trigger an action or switch active handlers"""
+
+class BaseEventHandler(tcod.event.EventDispatch[ActionOrHandler]):
+    def handle_events(self, event: tcod.event.Event) -> BaseEventHandler:
+        """Handle an event and return the next active event handler"""
+        state = self.dispatch(event)
+        if isinstance(state, BaseEventHandler):
+            return state
+        assert not isinstance(state, Action), f"{self!r} can not handle actions."
+        return self
+    
+    def on_render(self, console: tcod.Console) -> None:
+        raise NotImplementedError()
+    
+    def ev_quit(self, event: tcod.event.Quit) -> Optional[Action]:
+        raise SystemExit()
+
+class EventHandler(BaseEventHandler):
     def __init__(self, engine: Engine):
         self.engine = engine
         
-    def handle_events(self, event: tcod.event.Event) -> None:
-        self.handle_action(self.dispatch(event))
+    def handle_events(self, event: tcod.event.Event) -> BaseEventHandler:
+        """Handle events for input handlers with an engine."""
+        action_or_state = self.dispatch(event)
+        if isinstance(action_or_state, BaseEventHandler):
+            return action_or_state
+        if self.handle_action(action_or_state):
+            # A valid action was performed
+            if not self.engine.player.is_alive:
+                return GameOverEventHandler(self.engine)
+            return MainGameEventHandler(self.engine)
+        return self
+        
         
     def handle_action(self, action: Optional[Action]) -> bool:
         """Handle actions returned from event methods
@@ -88,10 +116,6 @@ class EventHandler(tcod.event.EventDispatch[Action]):
     def ev_mousemotion(self, event: tcod.event.MouseMotion) -> None:
         if self.engine.game_map.in_bounds(event.tile.x, event.tile.y):
             self.engine.mouse_location = event.tile.x, event.tile.y
-        
-    
-    def ev_quit(self, event: tcod.event.Quit) -> Optional[Action]:
-        raise SystemExit()
     
     def on_render(self, console: tcod.Console) -> None:
         self.engine.render(console)

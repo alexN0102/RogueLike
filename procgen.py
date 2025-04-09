@@ -69,7 +69,7 @@ def get_entities_at_random(
                 entity_weighted_chances[entity] = weighted_chance
                 
     entities = list(entity_weighted_chances.keys())
-    entity_weighted_chance_values = list(entity_weighted_chance_values.values())
+    entity_weighted_chance_values = list(entity_weighted_chances.values())
     
     chosen_entities = random.choices(
         entities, weights=entity_weighted_chance_values, k=number_of_entities

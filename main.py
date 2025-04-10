@@ -19,25 +19,10 @@ def main() -> None:
     screen_width = 80
     screen_height = 50
     
-    #tileset = tcod.tileset.load_tilesheet(
-    #    "dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD
-    #)
-    
-    tile_pixel_width = 24
-    tile_pixel_height = 24
-    
-    try:
-        tileset = tcod.tileset.load_truetype_font(
-            "PixelOperator8-Bold.ttf",
-            tile_pixel_width,
-            tile_pixel_height
-        )
-    except FileNotFoundError:
-        print("Error: the font file was not found")
-        raise SystemExit()
-    except Exception as e:
-        print("Error loading font: {e}")
-        raise SystemExit()
+    tileset = tcod.tileset.load_tilesheet(
+        "dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD
+    )
+
     
     handler: input_handlers.BaseEventHandler = setup_game.MainMenu()
     

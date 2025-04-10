@@ -53,10 +53,10 @@ def new_game() -> Engine:
     leather_armor.parent = player.inventory
     
     player.inventory.items.append(dagger)
-    player.equiment.toggle_equip(dagger, add_message=False)
+    player.equipment.toggle_equip(dagger, add_message=False)
     
     player.inventory.items.append(leather_armor)
-    player.equiment.toggle_equip(leather_armor, add_message=False)
+    player.equipment.toggle_equip(leather_armor, add_message=False)
     
     return engine
 
